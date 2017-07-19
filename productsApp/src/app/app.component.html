@@ -1,0 +1,19 @@
+<h1>Products</h1>
+<div *ngFor="let product of products">
+  <span><strong>Product ID:</strong> {{product.id}}</span>
+  <span><strong>Name: </strong> {{product.name}}</span>
+  <span><strong>Category: </strong> {{product.category}}</span>
+  <span (click)="deleteProduct(product.id)">-- Delete</span>
+  <hr>
+</div>
+
+<h1>Add new product</h1>
+<div [formGroup]="formGroup">
+<strong>Product Name:</strong>
+<input type="text" formControlName="name"/>
+
+  <strong>Product Category:</strong>
+  <input type="text" formControlName="category"/>
+
+  <button (click)="addProduct()">Add Product</button>
+</div>
