@@ -1,23 +1,49 @@
 <div class="container">
   <div class="col-xs-12">
-    <h1>Products</h1>
-    <div *ngFor="let product of products">
-      <span><strong>Product ID:</strong> {{product.id}}</span>
-      <span><strong>Name: </strong> {{product.name}}</span>
-      <span><strong>Category: </strong> {{product.category}}</span>
-      <span (click)="deleteProduct(product.id)">-- Delete</span>
-      <hr>
+    <h1 class="section-title">Products</h1>
+    <div class="new-form" *ngFor="let product of products">
+      <div class="row">
+        <div class="col-md-2">
+          <strong>Product ID:</strong> {{product.id}}
+        </div>
+        <div class="col-md-4">
+          <strong>Name: </strong> {{product.name}}
+        </div>
+        <div class="col-md-4">
+          <strong>Category: </strong> {{product.category}}
+        </div>
+        <div class="col-md-2">
+          <button (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
     </div>
 
-    <h1>Add new product</h1>
-    <div [formGroup]="formGroup">
-      <strong>Product Name:</strong>
-      <input type="text" formControlName="name"/>
+    <h1 class="section-title">Add new product</h1>
+    <div [formGroup]="formGroup" class="new-form">
+      <div class="row">
+        <div class="col-xs-3">
+          <strong>Product Name:</strong>
+        </div>
+        <div class="col-xs-9">
+          <input type="text" formControlName="name"/>
+        </div>
+      </div>
 
-      <strong>Product Category:</strong>
-      <input type="text" formControlName="category"/>
+      <div class="row">
+        <div class="col-xs-3">
+          <strong>Product Category:</strong>
+        </div>
+        <div class="col-xs-9">
+          <input type="text" formControlName="category"/>
+        </div>
+      </div>
 
-      <button (click)="addProduct()">Add Product</button>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-primary" (click)="addProduct()">Add Product</button>
+        </div>
+      </div>
+
     </div>
 
   </div>
