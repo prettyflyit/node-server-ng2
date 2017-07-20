@@ -25,6 +25,7 @@
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
     "mongoose": "^4.11.3",
+    "monk": "^6.0.1",
     "pg": "^7.0.0",
     "pg-hstore": "^2.3.2",
     "reflect-metadata": "^0.1.10",

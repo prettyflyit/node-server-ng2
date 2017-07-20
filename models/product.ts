@@ -52,73 +52,69 @@ let products: Product[] = [
 
 module.exports = Product;
 
-module.exports.get = () => {
-    //return products;
+module.exports = {
+    get() {
+        //return products;
 
-    return new Promise<any>(((resolve, reject) => {
-        database.findAll('products').then((response: any) => {
-            resolve(response);
+        return new Promise<any>(((resolve, reject) => {
+            database.findAll('products').then((response: any) => {
+                resolve(response);
+                reject(() => {
+                    console.log("ERROR");
+                });
+            });
+        }));
+    },
+
+
+    getById(id: string) {
+        //return products.filter((product: Product) => {
+        //    return product.id === parseInt(id,0);
+        //})
+
+        return new Promise<any>(((resolve, reject) => {
+            database.find('products', id).then((response: any) => {
+                resolve(response);
+                reject(() => {
+                    console.log("ERROR");
+                });
+            });
+        }));
+    },
+
+    products() {
+        return products;
+    },
+
+    createProduct(data: any) {
+        let product = Product.create(data);
+        //products.push(fakeId(product));
+        //database.save(product, 'products');
+        //return products;
+
+        database.save(product, 'products');
+        return new Promise<any>((resolve, reject) => {
+            resolve(module.exports.get());
             reject(() => {
                 console.log("ERROR");
             });
+        })
+    },
+
+
+    getAll() {
+        return database.getProducts();
+    },
+
+    deleteProduct(id: string) {
+        let deleteProduct = _.find(products, (product) => {
+            return product.id === parseInt(id);
         });
-    }));
+
+        if (deleteProduct) {
+            _.remove(products, deleteProduct);
+        }
+
+        return products;
+    },
 };
-
-module.exports.getById = (id: string) => {
-    //return products.filter((product: Product) => {
-    //    return product.id === parseInt(id,0);
-    //})
-
-    return new Promise<any>(((resolve, reject) => {
-        database.find('products', id).then((response: any) => {
-            resolve(response);
-            reject(() => {
-                console.log("ERROR");
-            });
-        });
-    }));
-};
-
-module.exports.products = () => {
-    return products;
-};
-
-module.exports.createProduct = (data: any) => {
-    let product = Product.create(data);
-    //products.push(fakeId(product));
-    //database.save(product, 'products');
-    //return products;
-
-    database.save(product, 'products');
-    return new Promise<any>((resolve, reject) => {
-        resolve(module.exports.get());
-        reject(() => {
-            console.log("ERROR");
-        });
-    })
-};
-
-module.exports.deleteProduct = (id: string) => {
-    let deleteProduct = _.find(products, (product) => {
-        return product.id === parseInt(id);
-    });
-
-    if(deleteProduct) {
-        _.remove(products, deleteProduct);
-    }
-
-    return products;
-};
-
-/**
- * Faker function to mimic database incremental
- * IDs.
- * @param product
- * @returns {Product}
- */
-function fakeId(product: Product) {
-    let lastId: number = products[products.length - 1].id;
-    product.id = lastId + 1;
-    return product;
-}
