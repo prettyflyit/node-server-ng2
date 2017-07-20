@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+const database = require('../util/storage');
 
 export class Product {
     id: number;
@@ -52,13 +53,31 @@ let products: Product[] = [
 module.exports = Product;
 
 module.exports.get = () => {
-    return products;
+    //return products;
+
+    return new Promise<any>(((resolve, reject) => {
+        database.findAll('products').then((response: any) => {
+            resolve(response);
+            reject(() => {
+                console.log("ERROR");
+            });
+        });
+    }));
 };
 
 module.exports.getById = (id: string) => {
-    return products.filter((product: Product) => {
-        return product.id === parseInt(id,0);
-    })
+    //return products.filter((product: Product) => {
+    //    return product.id === parseInt(id,0);
+    //})
+
+    return new Promise<any>(((resolve, reject) => {
+        database.find('products', id).then((response: any) => {
+            resolve(response);
+            reject(() => {
+                console.log("ERROR");
+            });
+        });
+    }));
 };
 
 module.exports.products = () => {
@@ -67,8 +86,17 @@ module.exports.products = () => {
 
 module.exports.createProduct = (data: any) => {
     let product = Product.create(data);
-    products.push(fakeId(product));
-    return products;
+    //products.push(fakeId(product));
+    //database.save(product, 'products');
+    //return products;
+
+    database.save(product, 'products');
+    return new Promise<any>((resolve, reject) => {
+        resolve(module.exports.get());
+        reject(() => {
+            console.log("ERROR");
+        });
+    })
 };
 
 module.exports.deleteProduct = (id: string) => {

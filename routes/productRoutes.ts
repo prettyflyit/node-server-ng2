@@ -6,7 +6,9 @@ const product = require('../models/product');
  * Get product list
  */
 router.get('/', (req: any, res: any) => {
-    res.send(product.get());
+    product.get().then((response: any) => {
+        res.send(response);
+    });
 });
 
 /**
@@ -20,6 +22,7 @@ router.get('/:id', (req: any, res: any) => {
  * Create a product
  */
 router.post('/create', (req: any, res: any) => {
+
     res.send(product.createProduct(req.body));
 });
 

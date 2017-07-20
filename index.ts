@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const productRoutes = require('./routes/productRoutes');
+const storage = require('./util/storage');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 /**
  * Block access to /private
@@ -49,6 +49,7 @@ app.get('/', (req: any, res: any) => {
 app.use('/product', productRoutes);
 
 app.listen(8085, () => {
+    storage.initDB();
     console.log('Running on 8085');
 });
 
